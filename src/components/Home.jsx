@@ -21,6 +21,8 @@ export default function Home(props){
     const [fight, setFight ] =useState('');
     const [player1, setPlayer1] =useState('');
     const [player2 ,setPlayer2]=useState('');
+    const [disableall , setDisableall]= useState(false);
+    
     
 const handlePlayer2=(event3)=>{setPlayer2(event3.target.value);};
   const handleChange = (event) => {
@@ -35,6 +37,7 @@ const handlePlayer2=(event3)=>{setPlayer2(event3.target.value);};
 
 
   function handleSubmit(){
+    setDisableall(true)
     props.sendToParent({player1,player2,round,fight})
     console.log("button is clicked",player1,player2,round,fight)
   }
@@ -49,12 +52,13 @@ const handlePlayer2=(event3)=>{setPlayer2(event3.target.value);};
       noValidate
       autoComplete="off"
     >
-        <div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
         <TextField required
           id="player1"
           label="Player1 Name"
           value={player1}
           onChange={handlePlayer1}
+          disabled={disableall}
         />
          <TextField
           required
@@ -62,41 +66,50 @@ const handlePlayer2=(event3)=>{setPlayer2(event3.target.value);};
           label="Player2 Name"
           value ={player2}
           onChange={handlePlayer2}
+          disabled={disableall}
         />
-        
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
         <h2>No of rounds </h2>
-        <InputLabel id="demo-simple-select-label">Round</InputLabel>
+        <InputLabel id="demo-simple-select-label"></InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select-autowidth"
           value={round}
           onChange={handleChange}
           autoWidth
-          label="Round"
+          label="Round" 
+          disabled={disableall}
         >
           <MenuItem value={1}>1</MenuItem>
           <MenuItem value={2}>2</MenuItem>
           <MenuItem value={3}>3</MenuItem>
         </Select>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
         <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Fight On</FormLabel>
+      <FormLabel style={{ display: "flex", justifyContent: "center", alignItems: "center", color : "red"}} 
+      id="demo-row-radio-buttons-group-label">Fight On</FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-label"
         name="row-radio-buttons-group"
         value ={fight}
         onChange={handleFight}
+        
       >
-        <FormControlLabel value="Hp" control={<Radio />} label="Hp" />
-        <FormControlLabel value="Attack" control={<Radio />} label="Attack" />
-        <FormControlLabel value="Defense" control={<Radio />} label="Defense" />
-        <FormControlLabel value="Specialattack" control={<Radio />} label="Special Attack" />
-        <FormControlLabel value="SpecialDefense" control={<Radio />} label="Special Defense" />
-        <FormControlLabel value="Speed" control={<Radio />} label="Speed" />
+        <FormControlLabel value="Hp" control={<Radio />} label="Hp" disabled={disableall} />
+        <FormControlLabel value="Attack" control={<Radio />} label="Attack" disabled={disableall} />
+        <FormControlLabel value="Defense" control={<Radio />} label="Defense"  disabled={disableall}/>
+        <FormControlLabel value="Specialattack" control={<Radio />} label="Special Attack"  disabled={disableall}/>
+        <FormControlLabel value="SpecialDefense" control={<Radio />} label="Special Defense"  disabled={disableall}/>
+        <FormControlLabel value="Speed" control={<Radio />} label="Speed" disabled={disableall} />
         
       </RadioGroup>
     </FormControl>
-    <Stack direction="row" spacing={2}>
+    </div>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+    <Stack direction="row" spacing={2} >
       <Button onClick={handleSubmit} variant="contained">
         Enter 
       </Button>
