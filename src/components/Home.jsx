@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -22,18 +22,34 @@ export default function Home(props){
     const [player1, setPlayer1] =useState('');
     const [player2 ,setPlayer2]=useState('');
     const [disableall , setDisableall]= useState(false);
+    const [nameError, setNameError] = useState(false);
+    const [disableEnter, setDisableEnter] = useState(true);
     
     
-const handlePlayer2=(event3)=>{setPlayer2(event3.target.value);};
+const handlePlayer2=(event3)=>{
+  setPlayer2(event3.target.value);
+};
   const handleChange = (event) => {
     setRound(event.target.value);
   };
-  const handleFight =(event1)=>{setFight(event1.target.value);
+  const handleFight =(event1)=>{
+    setFight(event1.target.value);
+  
 
   };
   const handlePlayer1=(event2)=>{
     setPlayer1(event2.target.value);
+
+    
   };
+  useEffect(()=>{checkAllInputs()}, [fight, player1, player2])
+  function checkAllInputs(){
+    if (fight != '' && player1 != '' && player2 != ''){
+      setDisableEnter(false)
+    }else{
+      setDisableEnter(true)
+    }
+  }
 
 
   function handleSubmit(){
@@ -49,7 +65,7 @@ const handlePlayer2=(event3)=>{setPlayer2(event3.target.value);};
         <Box
       component="form"
       sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
-      noValidate
+      
       autoComplete="off"
     >
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
@@ -98,19 +114,19 @@ const handlePlayer2=(event3)=>{setPlayer2(event3.target.value);};
         onChange={handleFight}
         
       >
-        <FormControlLabel value="Hp" control={<Radio />} label="Hp" disabled={disableall} />
-        <FormControlLabel value="Attack" control={<Radio />} label="Attack" disabled={disableall} />
-        <FormControlLabel value="Defense" control={<Radio />} label="Defense"  disabled={disableall}/>
-        <FormControlLabel value="Specialattack" control={<Radio />} label="Special Attack"  disabled={disableall}/>
-        <FormControlLabel value="SpecialDefense" control={<Radio />} label="Special Defense"  disabled={disableall}/>
-        <FormControlLabel value="Speed" control={<Radio />} label="Speed" disabled={disableall} />
+        <FormControlLabel value="Hp" control={<Radio required={true} />} label="Hp" disabled={disableall} />
+        <FormControlLabel value="Attack" control={<Radio required={true} />} label="Attack" disabled={disableall} />
+        <FormControlLabel value="Defense" control={<Radio required={true} />} label="Defense"  disabled={disableall}/>
+        <FormControlLabel value="Specialattack" control={<Radio required={true}  />} label="Special Attack"  disabled={disableall}/>
+        <FormControlLabel value="SpecialDefense" control={<Radio required={true}  />} label="Special Defense"  disabled={disableall}/>
+        <FormControlLabel value="Speed" control={<Radio required={true}  />} label="Speed" disabled={disableall} />
         
       </RadioGroup>
     </FormControl>
     </div>
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
     <Stack direction="row" spacing={2} >
-      <Button onClick={handleSubmit} variant="contained">
+      <Button onClick={handleSubmit} variant="contained" disabled={disableEnter}>
         Enter 
       </Button>
       </Stack>

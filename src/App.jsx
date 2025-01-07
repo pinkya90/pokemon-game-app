@@ -1,5 +1,5 @@
 import Home from './components/Home'
-import Scorecard from './components/Scorecard'
+
 import Battlepage from './components/Battlepage'
 import { useState } from 'react'
 
@@ -10,7 +10,7 @@ console.log(getdata)
   return (
     <>
       <Home  sendToParent={setGetdata}/>
-      <Scorecard />
+     
       <Battlepage getdata={getdata}/>
     </>
   )
