@@ -77,16 +77,13 @@ export default function Battlepage(props){
            setPlayer1reloaddisable(false)
            setPlayer2reloaddisable(false)
            setFightdisbale(true)
-            const stats_mapping = {"HP": 0, "Attack": 1, "Defense": 2, "SpecialDefense": 4, "Specialattack": 3, "Speed": 5}
+            const stats_mapping = {"Hp": 0, "Attack": 1, "Defense": 2, "SpecialDefense": 4, "Specialattack": 3, "Speed": 5}
             if((player1Data['stats']?.[stats_mapping[getdata.fight]]?.["base_stat"])>(player2Data['stats']?.[stats_mapping[getdata.fight]]?.["base_stat"]))
             {
               setPlayer1score(player1score+1)
-              alert("player1 is winner")
             }else{
               setPlayer2score(player2score+1)
-              alert("player2 is winner ")
             }
-            // alert(getdata.fight);
           }
           function player1Reloaddone(){
             setFightdisbale(false)
@@ -106,14 +103,14 @@ export default function Battlepage(props){
             }
           }, [player1reloaddisable, player2reloaddisable, round])
           return(
-           
-              <Box sx={{ flexGrow: 1 }} >
+            <div style={{visibility: getdata.disableEnter || getdata.disableEnter == undefined ? 'hidden': ''}}>
+              <Box sx={{ flexGrow: 1 }} visibility={!getdata.disableEnter}>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
                 <h1>{getdata.player1} V/S {getdata.player2} </h1>
                 
                 </div>
                 
-                <Scorecard player1score={player1score} player2score={player2score} data={getdata}/>
+                <Scorecard player1score={player1score} player2score={player2score} data={getdata} curround={round}/>
                 <Grid container spacing={15}>
                   
                     
@@ -122,7 +119,7 @@ export default function Battlepage(props){
                     <Item><img width="250" height="250" src={`https://img.pokemondb.net/artwork/${player1Data["name"]}.jpg`} />
                   
                     <h2>{player1Data["name"]}</h2>
-                    <div>
+                    <div style={{visibility :'hidden'}}>
                     <h3>{player1Data['stats']?.[0]?.['base_stat']} : HP</h3>
                     <h3>{player1Data['stats']?.[1]?.['base_stat']} : Attack</h3>
                     <h3>{player1Data['stats']?.[2]?.['base_stat']} : Defense</h3>
@@ -145,12 +142,14 @@ export default function Battlepage(props){
                     <h1>{getdata.player2}</h1>
                     <Item><img width="250" height="250"  src={`https://img.pokemondb.net/artwork/${player2Data['name']}.jpg`} />
                     <h2>{player2Data['name']}</h2>
+                    <div style={{visibility :'hidden'}} >
                     <h3>{player2Data['stats']?.[0]?.['base_stat']} : HP</h3>
                     <h3>{player2Data['stats']?.[1]?.['base_stat']} : Attack</h3>
                     <h3>{player2Data['stats']?.[2]?.['base_stat']} : Defense</h3>
                     <h3>{player2Data['stats']?.[3]?.['base_stat']} : Special Attack</h3>
                     <h3>{player2Data['stats']?.[4]?.['base_stat']} : Special Defense</h3>
                     <h3>{player2Data['stats']?.[5]?.['base_stat']} : Speed </h3>
+                    </div>
                     </Item>
                     <div style={{ display: "flex", justifyContent: "space-between" }} >
                     <Button onClick={handlePlayer2reload} variant="contained" disabled={player2reloaddisable}>
@@ -175,7 +174,7 @@ export default function Battlepage(props){
                </Stack>
                </div>
               </Box>
-               
+               </div>
             );
           }
 

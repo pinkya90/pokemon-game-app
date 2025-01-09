@@ -54,7 +54,7 @@ const handlePlayer2=(event3)=>{
 
   function handleSubmit(){
     setDisableall(true)
-    props.sendToParent({player1,player2,round,fight})
+    props.sendToParent({player1,player2,round,fight, disableEnter})
     console.log("button is clicked",player1,player2,round,fight)
   }
   
